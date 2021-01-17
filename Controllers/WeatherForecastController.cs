@@ -11,6 +11,31 @@ namespace SampleWebAPI.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private static List<WeatherForecast> days = new List<WeatherForecast>
+        {
+            new WeatherForecast
+            {
+                City = "Kielce",
+                Date = DateTime.Now,
+                Summary = "Zimno",
+                TemperatureC = 1,
+            },
+            new WeatherForecast
+            {
+                City = "Warsaw",
+                Date = DateTime.Now,
+                Summary = "Ciepło",
+                TemperatureC = 30,
+            },
+            new WeatherForecast
+            {
+                City = "Legionowo",
+                Date = DateTime.Now,
+                Summary = "Ciepło",
+                TemperatureC = 30,
+            }
+        };
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -24,42 +49,18 @@ namespace SampleWebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> GetAll()
         {
-            var days = new List<WeatherForecast>
-            {
-                new WeatherForecast
-                {
-                    Date = DateTime.Now,
-                    Summary = "Zimno",
-                    TemperatureC = 1,
-                },
-                new WeatherForecast
-                {
-                    Date = DateTime.Now,
-                    Summary = "Ciepło",
-                    TemperatureC = 30,
-                }
-            };
-
-            var cieplo = days
-                .Where(forecast => forecast.Summary == "Ciepło");
-                // .Select(forecast => new
-                // {
-                //     forecast.Date
-                // }).ToList();
-            return cieplo;
-
-            // var rng = new Random();
-            // return Enumerable.Range(1, 5)
-            //     .Where(i => i > 4)
-            //     .Select(index => new WeatherForecast
-            //     {
-            //         Date = DateTime.Now.AddDays(index),
-            //         TemperatureC = rng.Next(-20, 55),
-            //         Summary = Summaries[rng.Next(Summaries.Length)]
-            //     })
-            //     .ToArray();
+            return days;
         }
+
+        [HttpGet("{city}")]
+        public WeatherForecast GetOne(string city)
+        {
+            var cieplo = days
+                .FirstOrDefault(forecast => forecast.City == city);
+            return cieplo;
+        }
+        
     }
 }

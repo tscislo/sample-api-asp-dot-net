@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SampleWebAPI.Middlewares;
 
 namespace SampleWebAPI
 {
@@ -27,7 +28,6 @@ namespace SampleWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -38,10 +38,12 @@ namespace SampleWebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.Run(async context =>
-            {
-                await context.Response.WriteAsync("AAAAA");
-            });
+            // Inline middleware
+            // app.Run(async context =>
+            // {
+            //     await context.Response.WriteAsync("AAAAA");
+            // });
+            app.UseSampleMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
