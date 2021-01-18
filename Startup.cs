@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SampleWebAPI.Middlewares;
+using SampleWebAPI.Services;
 
 namespace SampleWebAPI
 {
@@ -28,6 +29,7 @@ namespace SampleWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IWeatherForecastService, SummerWeatherForecastService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
