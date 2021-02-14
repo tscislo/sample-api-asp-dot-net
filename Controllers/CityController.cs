@@ -5,12 +5,12 @@ namespace SampleWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class CityController
+    public class CityController : ControllerBase
     {
         [HttpPost("{city}")]
-        public City Post(City cityBody, string city)
+        public IActionResult Post(City cityBody, string city)
         {
-            return cityBody;
+            return Ok(cityBody);
         }
     }
 }
