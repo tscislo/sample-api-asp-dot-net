@@ -33,7 +33,13 @@ namespace SampleWebAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SampleWebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "SampleWebAPI", Version = "v1"});
+            });
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+                loggingBuilder.AddAzureWebAppDiagnostics();
             });
         }
 
@@ -46,12 +52,9 @@ namespace SampleWebAPI
             //     await context.Response.WriteAsync("AAAAA");
             // });
             app.UseSampleMiddleware();
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SampleWebAPI v1"));
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SampleWebAPI v1"));
 
             app.UseHttpsRedirection();
 
@@ -59,10 +62,7 @@ namespace SampleWebAPI
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
