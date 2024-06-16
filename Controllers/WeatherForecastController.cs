@@ -11,33 +11,26 @@ namespace SampleWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController(
+        ILogger<WeatherForecastController> logger,
+        IWeatherForecastService weatherForecastService
+    )
+        : ControllerBase
     {
-        private readonly IWeatherForecastService _weatherForecastService;
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(
-            ILogger<WeatherForecastController> logger,
-            IWeatherForecastService weatherForecastService
-        )
-        {
-            _logger = logger;
-            _weatherForecastService = weatherForecastService;
-        }
-
         [HttpGet]
         public IEnumerable<WeatherForecast> GetAll()
         {
-            return _weatherForecastService.Get();
+            logger.LogInformation("GetAll");
+            return weatherForecastService.Get();
         }
 
         [HttpGet("{city}")]
         public WeatherForecast GetOne(string city)
         {
-            var cieplo = _weatherForecastService.Get()
+            var cieplo = weatherForecastService.Get()
                 .FirstOrDefault(forecast => forecast.City == city);
+            logger.LogInformation("GetOne");
             return cieplo;
         }
-        
     }
 }

@@ -6,15 +6,16 @@ namespace SampleWebAPI.Services
 {
     public class WinterWeatherForecastService : IWeatherForecastService
     {
-        public List<WeatherForecast> Get() => new List<WeatherForecast>
-        {
-            new()
+        public List<WeatherForecast> Get() =>
+        [
+            new WeatherForecast
             {
                 City = "Kielce",
                 Date = DateTime.Now,
                 Summary = "Zimno",
                 TemperatureC = -15,
             },
+
             new WeatherForecast
             {
                 City = "Warsaw",
@@ -22,6 +23,7 @@ namespace SampleWebAPI.Services
                 Summary = "Ciepło",
                 TemperatureC = -5,
             },
+
             new WeatherForecast
             {
                 City = "Legionowo",
@@ -29,6 +31,6 @@ namespace SampleWebAPI.Services
                 Summary = "Ciepło",
                 TemperatureC = -10,
             }
-        };
+        ];
     }
 }

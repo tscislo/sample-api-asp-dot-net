@@ -4,23 +4,14 @@ using Microsoft.Extensions.Logging;
 
 namespace SampleWebAPI.Middlewares
 {
-    public class SecondMiddleware
+    public class SecondMiddleware(
+        RequestDelegate next,
+        ILogger<SecondMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<SecondMiddleware> _logger;
-
-        public SecondMiddleware(RequestDelegate next,
-            ILogger<SecondMiddleware> logger
-            )
-        {
-            _next = next;
-            _logger = logger;
-        }
-
         public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogInformation("request second middleware");
-            await _next(context);
+            logger.LogInformation("request second middleware");
+            await next(context);
         }
     }
 }
